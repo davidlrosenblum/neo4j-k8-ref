@@ -1,0 +1,23 @@
+# Create lab1.values.yaml using the code editor of your choice
+# use your own name!
+# lab1.values.yaml
+neo4j:
+  name: "neo4j-bloom"
+  password: "rosenblum-password"
+# offlineMaintenanceModeEnabled: true
+  edition: "enterprise"
+  acceptLicenseAgreement: "yes"
+
+volumes:
+  data:
+    mode: "defaultStorageClass"
+#
+config:
+  dbms.backup.enabled: "true"
+  dbms.config.strict_validation: "false"
+#  dbms.directories.plugins: "/plugins"
+  dbms.security.procedures.unrestricted: "apoc.*,gds.*,bloom.*"
+  dbms.unmanaged_extension_classes: "com.neo4j.bloom.server=/bloom"
+  dbms.security.http_auth_allowlist: "/,/browser.*,/bloom.*"
+  neo4j.bloom.authorization_role: "admin,architect,bloom"
+  neo4j.bloom.license_file: "license/internal-bloom-server.license"

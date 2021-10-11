@@ -1,0 +1,9 @@
+helm uninstall nba-loadbal
+helm uninstall nba-svc-headless
+helm uninstall nba-core-1
+helm uninstall nba-core-2
+helm uninstall nba-core-3
+helm uninstall nba-core-4
+helm uninstall nba-core-5
+helm uninstall nba-rr-1
+helm uninstall nba-rr-2

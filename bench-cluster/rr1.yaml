@@ -1,0 +1,43 @@
+image:
+  imagePullPolicy: Always
+  customImage: davidlrosenblum/neo4japoc:4.3.4-enterprise
+neo4j:
+  name: "nba-cluster"
+  offlineMaintenanceModeEnabled: false
+  resources:
+    cpu: "24"
+    memory: "236Gi"
+
+  # Uncomment to set the initial password
+  password: "Myneo4j"
+
+  # Uncomment to use enterprise edition
+  edition: "enterprise"
+  acceptLicenseAgreement: "yes"
+
+config:
+  dbms.mode: "READ_REPLICA"
+  dbms.backup.enabled: "true"
+  dbms.config.strict_validation: "false"
+  dbms.security.procedures.unrestricted: "apoc.*,gds.*,bloom.*"
+  dbms.unmanaged_extension_classes: "com.neo4j.bloom.server=/bloom"
+  dbms.security.http_auth_allowlist: "/,/browser.*,/bloom.*"
+  neo4j.bloom.authorization_role: "admin,architect,bloom"
+  neo4j.bloom.license_file: "license/internal-bloom-server.license"
+  dbms.memory.heap.initial_size: "31g"
+  dbms.memory.heap.max_size: "31g"
+  dbms.memory.pagecache.size: "150g"
+
+volumes:
+  import:
+    mode: "volume"
+    volume:
+      gcePersistentDisk:
+        pdName: "nba-import-rr-disk-1"
+        fsType: xfs
+  data:
+    mode: "volume"
+    volume:
+      gcePersistentDisk:
+        pdName: "nba-data-rr-1"
+        fsType: xfs
