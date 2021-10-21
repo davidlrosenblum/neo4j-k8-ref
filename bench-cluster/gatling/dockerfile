@@ -1,0 +1,22 @@
+FROM openjdk:11
+ARG JAVA_OPTS="-Xmx3G"
+ENV JAVA_OPTS=${JAVA_OPTS}
+ARG SIMULATION="neo4j.closedSimulation"
+ENV SIMULATION=${SIMULATION}
+ARG DESCRIPTION="closedSimulation"
+ENV DESCRIPTION=${DESCRIPTION}
+ARG NEO4J_USER="nbafan"
+ENV NEO4J_USER=${NEO4J_USER}
+ARG NEO4J_PASSWORD="xxxxx"
+ENV NEO4J_PASSWORD=${NEO4J_PASSWORD}
+ARG NEO4J_URI="https://neo4j.iclinicalgraph.net:7473"
+ENV NEO4J_URI=${NEO4J_URI}
+ARG REQUEST_FILE="export.csv"
+ENV REQUEST_FILE=${REQUEST_FILE}
+COPY gatling/. /usr/src/gatling
+WORKDIR /usr/src/gatling
+RUN mkdir /data
+RUN mkdir /logs
+VOLUME /data
+VOLUME /logs
+ENTRYPOINT ["sh" , "-c" , "bin/gatling.sh -s ${SIMULATION} -rd ${DESCRIPTION} -rf /data  > /logs/run.log 2>&1 "]

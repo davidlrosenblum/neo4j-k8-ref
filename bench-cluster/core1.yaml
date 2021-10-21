@@ -8,17 +8,18 @@ neo4j:
     memory: "236Gi"
 
   # Uncomment to set the initial password
-  password: "Myneo4j"
+  password: "<password>"
 
   # Uncomment to use enterprise edition
   edition: "enterprise"
   acceptLicenseAgreement: "yes"
 
 config:
-  dbms.mode: "CORE"
+  unsupported.dbms.discoverable_bolt_routing_address: "neo4j://<host and :port>"
   dbms.backup.enabled: "true"
   dbms.config.strict_validation: "false"
-  dbms.security.procedures.unrestricted: "apoc.*,gds.*,bloom.*"
+  dbms.logs.query.enabled: "OFF"
+  dbms.security.procedures.unrestricted: "apoc.*,gds.*,bloom.*,NBA.*"
   dbms.unmanaged_extension_classes: "com.neo4j.bloom.server=/bloom"
   dbms.security.http_auth_allowlist: "/,/browser.*,/bloom.*"
   neo4j.bloom.authorization_role: "admin,architect,bloom"
@@ -26,6 +27,10 @@ config:
   dbms.memory.heap.initial_size: "31g"
   dbms.memory.heap.max_size: "31g"
   dbms.memory.pagecache.size: "150g"
+  dbms.connector.bolt.thread_pool_min_size: "1000"
+  dbms.connector.bolt.thread_pool_max_size: "5000"
+  dbms.connector.bolt.thread_pool_keep_alive: "5m"
+  dbms.transaction.concurrent.maximum: "0"
 
 volumes:
   import:
